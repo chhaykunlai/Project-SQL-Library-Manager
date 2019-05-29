@@ -1,0 +1,27 @@
+{
+  "name": "sql-library-manager",
+  "version": "1.0.0",
+  "description": "Web application using with databases — storing, retrieving, updating and deleting information along side JavaScript, Node.js, Express, Pug, and the SQL ORM Sequelize.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chhaykunlai/Project-SQL-Library-Manager.git"
+  },
+  "author": "Chhaykun Lai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chhaykunlai/Project-SQL-Library-Manager/issues"
+  },
+  "homepage": "https://github.com/chhaykunlai/Project-SQL-Library-Manager#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^2.0.3",
+    "sequelize": "^5.8.7",
+    "sequelize-cli": "^5.4.0",
+    "sqlite3": "^4.0.8"
+  }
+}
