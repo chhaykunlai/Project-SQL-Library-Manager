@@ -1,0 +1,18 @@
+- const action = book ? `/books/${book.id}` : '/books/new'
+form(method="post" action=action)
+    p
+        label(for="title") Title
+        input(name="title" type="text" id="title" value=book ? book.title : null)
+    p
+        label(for="author") Author
+        input(name="author" type="text" id="author" value=book ? book.author : null)
+    p
+        label(for="genre") Genre
+        input(name="genre" type="text" id="genre" value=book ? book.genre : null)
+    p
+        label(for="year") Year
+        input(name="year" type="text" id="year" value=book ? book.year : null)
+    p: input(type="submit" value=book ? "Update Book" : "Create New Book")
+
+    if !book
+        p: a(class="button" href="/") Cancel
