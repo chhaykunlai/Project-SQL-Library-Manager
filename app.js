@@ -17,12 +17,12 @@ app.use((req, res, next) => {
     const notFoundError = new Error('Not found');
 
     notFoundError.status = 404;
-
     next(notFoundError)
 });
 
 app.use((error, req, res, next) => {
-    console.log('Error', error);
+    console.error('There is something wrong, ', error.message);
+    res.status(error.status || 500);
     res.render('page-not-found');
 });
 

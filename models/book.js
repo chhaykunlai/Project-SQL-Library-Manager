@@ -9,11 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      trim: true
     },
     author: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      trim: true
     },
     genre: DataTypes.STRING,
     year: DataTypes.INTEGER,
