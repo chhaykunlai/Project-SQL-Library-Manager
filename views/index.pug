@@ -30,8 +30,9 @@ block content
     if (books.rows)
         .pagination
             - let n = 1;
-            a(href = pagination.hasPrev ? pagination.prevUrl : "javascript:void(0);") &laquo;
+            a(href = pagination.hasPrev ? pagination.prevUrl : 'javascript:void(0);') &laquo;
             while n <= pagination.totalPages
                 - let className = (n === pagination.currentPage) ? "active" : "";
-                a(href=`${queryString}page=${n}` class=className)= n++
-            a(href = pagination.hasNext ? pagination.nextUrl : "javascript:void(0);") &raquo;
+                - let pageLink = (n === pagination.currentPage) ? 'javascript:void(0);' : `/books?${queryString ? queryString + '&' : ''}page=${n}`;
+                a(href=pageLink class=className)= n++
+            a(href = pagination.hasNext ? pagination.nextUrl : 'javascript:void(0);') &raquo;

@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
     const totalBooksPerPage = (pagination.currentPage * pagination.limit);
 
     pagination.offset = totalBooksPerPage - pagination.limit;
-    
+
     const books = await Book.findAndCountAll({
         where: conditions,
         limit: pagination.limit,
@@ -62,14 +62,16 @@ router.get('/', async (req, res) => {
         }
         return results;
     }, []);
+    const queryString = queryArray.join('&');
 
     pagination.totalCount = books ? books.count : 0;
     pagination.hasNext = pagination.totalCount > totalBooksPerPage;
     pagination.hasPrev = totalBooksPerPage > pagination.limit;
-    pagination.nextUrl = `/books?${queryArray.join('&')}&page=${pagination.currentPage + 1}`;
-    pagination.prevUrl = `/books?${queryArray.join('&')}&page=${pagination.currentPage - 1}`;
-    pagination.totalPages = Math.ceil(pagination.totalCount / (totalBooksPerPage - pagination.limit));
-    res.render('index', { books, query: queryObj, queryString: `/books?${queryArray.join('&')}`, pagination });
+    pagination.nextUrl = `/books?${queryString ? queryString + '&' : ''}page=${pagination.currentPage + 1}`;
+    pagination.prevUrl = `/books?${queryString ? queryString + '&' : ''}page=${pagination.currentPage - 1}`;
+    pagination.totalPages = Math.ceil(pagination.totalCount / pagination.limit);
+
+    res.render('index', { books, query: queryObj, queryString: queryString, pagination });
 });
 
 router.get('/new', (req, res) => {
@@ -87,7 +89,7 @@ router.post('/new', async (req, res) => {
 
         return res.render('new-book', { valiationErrors, book: data, isNew: true });
     }
-    
+
     res.redirect('/');
 });
 
@@ -110,7 +112,7 @@ router.post('/:id', async (req, res) => {
 
         return res.render('update-book', { valiationErrors, book, isNew: false });
     }
-    
+
     req.body = {};
     res.redirect('/');
 });
