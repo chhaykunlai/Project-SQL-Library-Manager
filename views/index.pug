@@ -2,7 +2,16 @@ extends layout.pug
 
 block content
     h1 Books
+
+    form.frm-search
+        input(name = "title" placeholder = "Search title" type="text" value = query ? query.title : null)
+        input(name = "author" placeholder = "Search author" type="text" value = query ? query.author : null)
+        input(name = "genre" placeholder = "Search genre" type="text" value = query ? query.genre : null)
+        input(name = "year" placeholder = "Search year" type="text" value = query ? query.year : null)
+        input(type = "submit" value = "Search" class = "btn-search")
+
     p: a(class="button" href="/books/new") Create New Book
+
     table
         thead
             tr
@@ -11,9 +20,18 @@ block content
                 th Genre
                 th Year
         tbody
-            each book in books
+            each book in books.rows
                 tr
                     td: a(href=`/books/${book.id}`) #{book.title}
                     td #{book.author}
                     td #{book.genre}
                     td #{book.year}
+
+    if (books.rows)
+        .pagination
+            - let n = 1;
+            a(href = pagination.hasPrev ? pagination.prevUrl : "javascript:void(0);") &laquo;
+            while n <= pagination.totalPages
+                - let className = (n === pagination.currentPage) ? "active" : "";
+                a(href=`${queryString}page=${n}` class=className)= n++
+            a(href = pagination.hasNext ? pagination.nextUrl : "javascript:void(0);") &raquo;

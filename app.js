@@ -26,9 +26,19 @@ app.use((req, res, next) => {
 
 // Handles error
 app.use((error, req, res, next) => {
-    console.error('There is something wrong, ', error.message);
-    res.status(error.status || 500);
-    res.render('page-not-found');
+    if (error) {
+        console.error('There is something wrong, ', error.message);
+        res.status(error.status || 500);
+
+        switch (error.status) {
+            case 404:
+                res.render('page-not-found');
+                break;
+            case 505:
+            default:
+                res.render('error');
+        }
+    }
 });
 
 app.listen(3000, () => {
