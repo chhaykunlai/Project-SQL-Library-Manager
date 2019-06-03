@@ -1,5 +1,10 @@
-- const action = book ? `/books/${book.id}` : '/books/new'
+- const action = isNew ? '/books/new' : `/books/${book.id}`
 form(method="post" action=action)
+    if valiationErrors
+        h2.error Oooops
+        ul.error
+            each valiationError in valiationErrors
+                li= valiationError
     p
         label(for="title") Title
         input(name="title" type="text" id="title" value=book ? book.title : null)
@@ -12,7 +17,7 @@ form(method="post" action=action)
     p
         label(for="year") Year
         input(name="year" type="text" id="year" value=book ? book.year : null)
-    p: input(type="submit" value=book ? "Update Book" : "Create New Book")
+    p: input(type = "submit" value = isNew ? "Create New Book" : "Update Book")
 
-    if !book
+    if isNew
         p: a(class="button" href="/") Cancel

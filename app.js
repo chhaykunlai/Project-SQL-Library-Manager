@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const mainRoutes = require('./routes');
+const bookRoutes = require('./routes/book');
 
 const app = express();
 
@@ -11,8 +12,11 @@ app.use('/static', express.static('public'));
 // Setup view engine
 app.set('view engine', 'pug');
 
+// Routes
 app.use(mainRoutes);
+app.use('/books', bookRoutes);
 
+// Not found middleware
 app.use((req, res, next) => {
     const notFoundError = new Error('Not found');
 
@@ -20,6 +24,7 @@ app.use((req, res, next) => {
     next(notFoundError)
 });
 
+// Handles error
 app.use((error, req, res, next) => {
     console.error('There is something wrong, ', error.message);
     res.status(error.status || 500);
